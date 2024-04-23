@@ -1,16 +1,16 @@
+const Workout = require('../models/Workouts')
 const mongoose = require('mongoose')
 
-const Workout = require('../models/Workouts')
-
 const createWorkout = async (req, res) => {
-    const {title, reps, weight} = req.body
-    try{
-        const workout = await Workout.create({title, reps, weight})
-        res.status(200).json(workout)
-    } catch(error){
-        res.status(400).json({error: error.message})
+    const {title, load, reps} = req.body;
+    try {
+        const workoutCreated = await Workout.create({
+        title, load, reps
+      });
+      res.status(200).json(workoutCreated);
+    } catch (error) {
+      res.status(400).json({error: error.message})
     }
-    res.json({mssg: 'test post workout'})
 }
 
 const getWorkouts = async (req, res) => {
@@ -20,7 +20,8 @@ const getWorkouts = async (req, res) => {
 
 const getWorkout = async (req, res) => {
     const { id } = req.params
-    if (!mongoose.Types.ObjectId.isvalid(id)){
+
+    if (!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error: 'no such workout'})
     }
     const workout = await Workout.findById(id)

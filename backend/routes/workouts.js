@@ -1,30 +1,27 @@
-const express = require('express')
-const { 
-    createWorkout,
-    getWorkouts,
-    getWorkout,
-    deleteWorkout,
-    updateWorkout
-} = require('../controllers/workoutController')
-const router = express.Router()
-/*
-    when a request is called to '/' this handler is called.
-*/
-router.get('/', async (req, res) => getWorkouts)
-/*
-    when a request is called to '/:id' this handler is called.
-    id is a param of route.
-*/
-router.get('/:id', async (req, res) => getWorkout)
-/*
-    when a post request is sent to default url, an async function is called.
-    it tries to make a variable named workout from the request, if not returns error.
-*/
-router.post('/', async (req, res) => createWorkout)
+const express = require("express");
+const {
+  createWorkout,
+  getWorkouts,
+  getWorkout,
+  deleteWorkout,
+  updateWorkout
+} = require("../controllers/workoutController");
 
-router.delete('/:id', (req, res) => deleteWorkout)
+const router = express.Router();
 
-router.patch('/:id', (req, res) => updateWorkout)
+// GET all workouts
+router.get("/", getWorkouts);
 
+// GET a single workout
+router.get("/:id", getWorkout);
 
-module.exports = router
+// POST a new workout
+router.post("/", createWorkout);
+
+// DELETE a new workout
+router.delete("/:id", deleteWorkout);
+
+// UPDATE an existing workout
+router.patch("/:id", updateWorkout);
+
+module.exports = router;
