@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
-
+import { useEffect, useState } from 'react'
+import WorkoutDetails from '../Components/workoutsDetails';
+import WorkoutForm from '../Components/workoutForm';
 
 const Home = () => {
     //define a state variable 'workouts' and a function 'setWorkouts' to update it
@@ -8,17 +9,19 @@ const Home = () => {
     useEffect(() => {
         //define an asynchronous function to fetch data
         async function fetchData() {
-            //send a GET request to fetch workouts data from the API
             try {
-                const response = await fetch('/api/workouts')
-                //check if the response is not OK
+                const response = await fetch('http://localhost:4000/api/workouts');
                 if (!response.ok) {
-                    throw new Error('Failed to fetch data')
+                    throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
+                }
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('Invalid response format: Expected JSON');
                 }
                 const json = await response.json();
                 setWorkouts(json);
             } catch (error) {
-                console.error('Error fetching data:', error)
+                console.error('Error fetching data:', error);
             }
         }
         fetchData();
@@ -28,9 +31,10 @@ const Home = () => {
             <h2>Home</h2>
             <div className="workouts">
                 {workouts && workouts.map((workout) => (//so this code does is check if the first condition is true, if so fires the arrow fucntion.
-                    <p key={workout._id}>{workout.title}</p>
+                    <WorkoutDetails key={workout._id} workout={workout} />
                 ))}
             </div>
+            <WorkoutForm/>
         </div>
 
     )
