@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 import WorkoutDetails from '../Components/workoutsDetails';
 import WorkoutForm from '../Components/workoutForm';
 
 const Home = () => {
     //define a state variable 'workouts' and a function 'setWorkouts' to update it
-    const [workouts, setWorkouts] = useState(null)
+    const {workouts, dispatch} = useWorkoutsContext()
     //useeffect hook to perform side effects in function components
     useEffect(() => {
         //define an asynchronous function to fetch data
@@ -19,22 +20,27 @@ const Home = () => {
                     throw new Error('Invalid response format: Expected JSON');
                 }
                 const json = await response.json();
-                setWorkouts(json);
+                dispatch({type: 'SET_WORKOUTS', payload: json});
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
         fetchData();
-    }, []); 
+    }, [dispatch]); 
     return(
         <div className="home">
-            <h2>Home</h2>
+            <div className='workout-form'>
+                <WorkoutForm />
+            </div>
+            <div className='spacing'>
+                
+            </div>
             <div className="workouts">
-                {workouts && workouts.map((workout) => (//so this code does is check if the first condition is true, if so fires the arrow fucntion.
+                {workouts && workouts.map((workout) => (
                     <WorkoutDetails key={workout._id} workout={workout} />
                 ))}
             </div>
-            <WorkoutForm/>
+            
         </div>
 
     )

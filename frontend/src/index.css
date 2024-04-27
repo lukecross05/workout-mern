@@ -1,41 +1,54 @@
+@font-face {
+  font-family: 'Heavitas';
+  src: url('./Assests/Heavitas.ttf') format('truetype');
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Heavitas', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #31572c; /* Lightest green */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
 /* Styles for the Navbar */
 header {
-  background-color: #333;
+  background-color: #132a13; /* Darkest green */
   color: #fff;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .container {
+  color: #eef4a7; /* Set the default text color for the container */
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+}
+
+.container a {
+  color: #eef4a7; /* Set the color of links within the container */
+  text-decoration: none;
 }
 
 h1 {
+  padding-left: 5px;
+  text-align: left;
   margin: 0;
 }
 
 /* Styles for the Form */
 .create {
   max-width: 400px;
-  margin: 0 auto;
+  margin-right: 1rem; /* Add right margin to create space between form and workouts */
 }
 
 .create h3 {
   margin-bottom: 1rem;
+  text-decoration: underline;
 }
 
 .create label {
@@ -47,42 +60,108 @@ h1 {
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 1rem;
+  border: 1px solid #eef4a7;
+  background-color: #eef4a7;
 }
-
+.spacing{
+  padding-bottom: 50px;
+}
+.workout-form{
+  padding: 0.5rem 1rem;
+  border: 1px solid #eef4a7;
+  background-color: #4f772d;
+  row-gap: 20px;
+  border-radius: 20px;
+}
+.formText{
+  color: #31572c;
+  
+}
 .create button {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #4f772d; /* Dark green */
+  color: #eef4a7;
   padding: 0.5rem 1rem;
   border: none;
   cursor: pointer;
+  
+  border-radius: 6px;
 }
-
+.detail-text{
+  color: #31572c;
+  padding-bottom: 15px;
+}
 .create button:hover {
-  background-color: #0056b3;
+  background-color: #31572c; /* Medium green */
 }
 
-.error {
+.error { 
   color: red;
 }
 
 /* Styles for the Workout Details */
+
+
+.workout-details h4 {
+  margin-top: 0;
+  text-decoration: underline;
+}
+
+/* Styles for the Home */
+.home {
+  padding: 1rem; 
+}
+.delete-text{
+  text-align: right;
+}
+.workouts {
+ 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 1rem;
+}
+
+.div.error {
+  padding: 10px;
+  background: #ffefef; /* Lightest red */
+  border: 1px solid #ff0000; /* Red */
+  color: #ff0000; /* Red */
+  border-radius: 4px;
+  margin: 20px;
+}
+
+.error-input {
+  background-color: #ffcccc; /* Light red */
+}
 .workout-details {
-  border: 1px solid #ccc;
+  border: 1px solid #eef4a7;
   padding: 1rem;
   margin-bottom: 1rem;
+  background-color: #4f772d;
+  border-radius: 10px;
 }
 
 .workout-details h4 {
   margin-top: 0;
 }
 
-/* Styles for the Home */
-.home {
-  padding: 1rem;
+.workout-details p {
+  margin: 0; /* Remove default margin for paragraphs */
 }
 
-.workouts {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 1rem;
+.workout-details span {
+  cursor: pointer; /* Change cursor to indicate clickable */
+  color: #eef4a7; /* Set text color */
+}
+
+.workout-details span:hover {
+  color: #f3f5db; /* Change text color on hover */
+}
+
+.container1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-wrap: wrap;
+  align-content: flex-end;
 }
