@@ -3,6 +3,9 @@ const User = require('../models/userModel')
 
 const requireAuth = async (req, res, next) => {
     //check authenticiyt
+    console.log("running auth")
+    console.log(req.headers)
+
     const { authorization } = req.headers;
     if(!authorization){
         return res.status(401).json({error: "auth token required"})
@@ -20,7 +23,7 @@ const requireAuth = async (req, res, next) => {
         
     } catch (error){
         console.log(error)
-        res.status(401).json({error: "request not autherised"})
+        res.status(401).json({error: "request not authorised"})
     }
 }
 
