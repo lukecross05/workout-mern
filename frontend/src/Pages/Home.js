@@ -2,16 +2,22 @@ import { useEffect } from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 import WorkoutDetails from '../Components/workoutsDetails';
 import WorkoutForm from '../Components/workoutForm';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Home = () => {
     //define a state variable 'workouts' and a function 'setWorkouts' to update it
     const {workouts, dispatch} = useWorkoutsContext()
+    const { user }= useAuthContext()
     //useeffect hook to perform side effects in function components
     useEffect(() => {
         //define an asynchronous function to fetch data
         async function fetchData() {
             try {
-                const response = await fetch('http://localhost:4000/api/workouts');
+                const response = await fetch('http://localhost:4000/api/workouts', {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
                 if (!response.ok) {
                     throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
                 }
@@ -25,8 +31,10 @@ const Home = () => {
                 console.error('Error fetching data:', error);
             }
         }
-        fetchData();
-    }, [dispatch]); 
+        if(user){
+            fetchData();
+        }
+    }, [dispatch, user]); 
     return(
         <div className="home">
             <div className='workout-form'>

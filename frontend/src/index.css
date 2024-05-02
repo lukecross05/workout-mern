@@ -20,7 +20,7 @@ code {
 header {
   background-color: #132a13; /* Darkest green */
   color: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .container {
@@ -38,6 +38,7 @@ h1 {
   padding-left: 5px;
   text-align: left;
   margin: 0;
+  padding-bottom: 15px;
 }
 
 /* Styles for the Form */
@@ -164,4 +165,17 @@ h1 {
   align-items: baseline;
   flex-wrap: wrap;
   align-content: flex-end;
+}
+
+.email{
+  padding-left: 5px;
+  font-size: medium;
+  color: black;
+  padding-right: 80%;
+}
+
+.button{
+  top: 0;
+  right: 0;
+  text-align: right;
 }
