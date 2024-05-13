@@ -1,15 +1,16 @@
-const express = require('express')
+const express = require("express");
+const {
+  createUserProfile,
+  getUserProfile,
+} = require("../controllers/profileController");
+const requireAuth = require("../middleware/requireAuth");
 
-const requireAuth = require('../middleware/requireAuth')
+const router = express.Router();
 
-const router = express.Router()
+router.use(requireAuth);
 
-const { createUserProfile, getUserProfile} = require('../controllers/profileController')
+router.get("/profile/:id", getUserProfile);
 
-router.use(requireAuth)
+router.post("/profile", createUserProfile);
 
-router.post('/profile', createUserProfile)
-
-router.get('/profile', getUserProfile);
-
-module.exports = router
+module.exports = router;

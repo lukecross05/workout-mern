@@ -1,18 +1,20 @@
 @font-face {
-  font-family: 'Heavitas';
-  src: url('./Assests/Heavitas.ttf') format('truetype');
+  font-family: "Heavitas";
+  src: url("./Assests/Heavitas.ttf") format("truetype");
 }
 
 body {
   margin: 0;
-  font-family: 'Heavitas', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Heavitas", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #31572c; /* Lightest green */
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -45,6 +47,7 @@ h1 {
 .create {
   max-width: 400px;
   margin-right: 1rem; /* Add right margin to create space between form and workouts */
+  background-color: #4f772d;
 }
 
 .create h3 {
@@ -64,19 +67,18 @@ h1 {
   border: 1px solid #eef4a7;
   background-color: #eef4a7;
 }
-.spacing{
+.spacing {
   padding-bottom: 50px;
 }
-.workout-form{
+.workout-form {
   padding: 0.5rem 1rem;
   border: 1px solid #eef4a7;
   background-color: #4f772d;
   row-gap: 20px;
   border-radius: 20px;
 }
-.formText{
+.formText {
   color: #31572c;
-  
 }
 .create button {
   background-color: #4f772d; /* Dark green */
@@ -84,10 +86,10 @@ h1 {
   padding: 0.5rem 1rem;
   border: none;
   cursor: pointer;
-  
+
   border-radius: 6px;
 }
-.detail-text{
+.detail-text {
   color: #31572c;
   padding-bottom: 15px;
 }
@@ -95,12 +97,11 @@ h1 {
   background-color: #31572c; /* Medium green */
 }
 
-.error { 
+.error {
   color: red;
 }
 
 /* Styles for the Workout Details */
-
 
 .workout-details h4 {
   margin-top: 0;
@@ -109,13 +110,12 @@ h1 {
 
 /* Styles for the Home */
 .home {
-  padding: 1rem; 
+  padding: 1rem;
 }
-.delete-text{
+.delete-text {
   text-align: right;
 }
 .workouts {
- 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 1rem;
@@ -167,14 +167,14 @@ h1 {
   align-content: flex-end;
 }
 
-.email{
+.email {
   padding-left: 5px;
   font-size: medium;
   color: black;
   padding-right: 80%;
 }
 
-.button{
+.button {
   top: 0;
   right: 0;
   text-align: right;
