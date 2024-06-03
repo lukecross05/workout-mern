@@ -1,14 +1,17 @@
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useProfileContext } from "../hooks/useProfileContext";
+
 import { useEffect, useState } from "react";
 
 const ProfileDetails = () => {
   const { dispatch } = useWorkoutsContext();
   const { user } = useAuthContext();
+  const { profile } = useProfileContext();
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
 
-  useEffect(() => {
+  /*useEffect(() => {
     //define an asynchronous function to fetch data
     async function fetchData() {
       try {
@@ -40,12 +43,12 @@ const ProfileDetails = () => {
     if (user) {
       fetchData();
     }
-  }, [dispatch, user]);
+  }, [dispatch, user]);*/
 
   return (
     <div className="workout-details">
-      <pre>{JSON.stringify(username)}</pre>
-      <pre>{JSON.stringify(bio)}</pre>
+      <pre>{JSON.stringify(profile.username)}</pre>
+      <pre>{JSON.stringify(profile.bio)}</pre>
     </div>
   );
 };

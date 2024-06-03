@@ -18,9 +18,22 @@ const profileSchema = new Schema({
     required: false,
     maxlength: 300,
   },
+  bPublic: {
+    type: String,
+    required: true,
+  },
+  picFile: {
+    type: String,
+    required: false,
+  },
 });
 
-profileSchema.statics.createProfile = async function (email, username, bio) {
+profileSchema.statics.createProfile = async function (
+  email,
+  username,
+  bio,
+  bPublic
+) {
   if (!email || !username) {
     throw Error("all essential fields must be filled");
   }
@@ -28,7 +41,7 @@ profileSchema.statics.createProfile = async function (email, username, bio) {
     throw Error("this is not a valid email");
   }
 
-  const profileData = { email, username };
+  const profileData = { email, username, bPublic };
 
   if (bio) {
     profileData.bio = bio;
@@ -39,4 +52,9 @@ profileSchema.statics.createProfile = async function (email, username, bio) {
   return profile;
 };
 
+profileSchema.statics.setPic = async function (profile, path) {
+  console.log("ran setpic");
+  profile.picFile = path;
+  return profile;
+};
 module.exports = mongoose.model("Profile", profileSchema);

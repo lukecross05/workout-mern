@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext.js";
 
+import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./Pages/Home.js";
 import Navbar from "./Components/navbar.js";
 import LogIn from "./Pages/login.js";

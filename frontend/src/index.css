@@ -12,6 +12,31 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #31572c; /* Lightest green */
 }
+h1 {
+  text-decoration: none;
+  color: inherit;
+  padding-left: 5px;
+  text-align: left;
+  margin: 0;
+  padding-bottom: 15px;
+}
+.navbar-container {
+  color: #eef4a7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -34,13 +59,6 @@ header {
 .container a {
   color: #eef4a7; /* Set the color of links within the container */
   text-decoration: none;
-}
-
-h1 {
-  padding-left: 5px;
-  text-align: left;
-  margin: 0;
-  padding-bottom: 15px;
 }
 
 /* Styles for the Form */

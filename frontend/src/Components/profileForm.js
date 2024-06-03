@@ -6,6 +6,10 @@ const ProfileForm = () => {
   const [bio, setBio] = useState("");
   const [error, setError] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
+  const [bPublic, setBPublic] = useState("public");
+  const [pic, setPic] = useState();
+  const [picFile, setPicFile] = useState();
+  const [picFileType, setPicFileType] = useState();
   const { user, dispatch } = useAuthContext();
 
   const handleSubmit = async (e) => {
@@ -14,13 +18,22 @@ const ProfileForm = () => {
       setError("you must be logged in");
       return;
     }
-    const profile = { username, bio };
+
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("bio", bio);
+    formData.append("bPublic", bPublic);
+    if (picFile) {
+      formData.append("picFile", picFile);
+      formData.append("picFileType", picFileType);
+    }
+
+    const profile = { username, bio, bPublic, picFileType, picFile };
 
     const response = await fetch("http://localhost:4000/api/users/profile", {
       method: "POST",
-      body: JSON.stringify(profile),
+      body: formData,
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
     });
@@ -42,9 +55,29 @@ const ProfileForm = () => {
       //context
     }
   };
-
+  const handleButton = (e) => {
+    e.preventDefault();
+    if (bPublic === "public") {
+      setBPublic("private");
+    } else {
+      setBPublic("public");
+    }
+  };
+  const handlePic = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    setPic(URL.createObjectURL(file));
+    setPicFile(file);
+    const fileTypeParts = file.type.split("/");
+    const fileExtension = fileTypeParts[fileTypeParts.length - 1];
+    setPicFileType(fileExtension);
+  };
   return (
-    <form className="create" onSubmit={handleSubmit}>
+    <form
+      className="create"
+      action="http://localhost:4000/api/users/profile"
+      onSubmit={handleSubmit}
+    >
       <h3>Create your profile</h3>
       <label className="formText">username</label>
       <input
@@ -61,7 +94,13 @@ const ProfileForm = () => {
         value={bio}
         //className={emptyFields.includes("bio") ? "error" : ""}
       />
-
+      <label>Upload Image</label>
+      <input type="file" accept="image/png, image/jpeg" onChange={handlePic} />
+      <img src={pic} />
+      <label className="formText">Profile Type</label>
+      <button onClick={handleButton}>Toggle Public</button>
+      <label>{bPublic}</label>
+      <p>This means other users will be able to veiw your workouts</p>
       <button className="submitButton"> Submit </button>
       {error && <div className="error">{error}</div>}
     </form>
