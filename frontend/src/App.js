@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext.js";
 
+import ProfileForm from "./Components/profileForm";
+import ProfileDetails from "./Components/profileDetails.js";
+import SearchUsers from "./Components/searchUsers.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./Pages/Home.js";
 import Navbar from "./Components/navbar.js";
@@ -29,8 +32,20 @@ function App() {
               element={!user ? <SignUp /> : <Navigate to="/" />}
             />
             <Route
+              path="/social"
+              element={!user ? <SignUp /> : <SearchUsers />}
+            />
+            <Route
               path="/users/profile"
-              element={!user ? <LogIn /> : <Profile />}
+              element={
+                !user ? (
+                  <LogIn />
+                ) : user.profileID ? (
+                  <ProfileDetails />
+                ) : (
+                  <ProfileForm />
+                )
+              }
             />
           </Routes>
         </div>

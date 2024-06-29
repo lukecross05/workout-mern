@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useProfileContext } from "../hooks/useProfileContext";
 
 const ProfileForm = () => {
   const [username, setUsername] = useState("");
@@ -11,7 +12,7 @@ const ProfileForm = () => {
   const [picFile, setPicFile] = useState();
   const [picFileType, setPicFileType] = useState();
   const { user, dispatch } = useAuthContext();
-
+  const { dispatch: profileDispatch } = useProfileContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -38,7 +39,24 @@ const ProfileForm = () => {
       },
     });
     const json = await response.json();
-
+    const {
+      newEmail,
+      newToken,
+      newProfileID,
+      newUsername,
+      newBio,
+      newPicPath,
+    } = json;
+    const userDetails = {
+      email: newEmail,
+      token: newToken,
+      profileID: newProfileID,
+    };
+    const profileDetails = {
+      username: newUsername,
+      bio: newBio,
+      picFile: newPicPath,
+    };
     if (!response.ok) {
       setError(json.error);
       setEmptyFields(json.emptyFields);
@@ -49,9 +67,13 @@ const ProfileForm = () => {
       setError(null);
       setEmptyFields([]);
       console.log("new profile added");
-      localStorage.setItem("user", JSON.stringify(json));
-      dispatch({ type: "LOGIN", payload: json });
+      console.log(json);
+      localStorage.setItem("user", JSON.stringify(userDetails));
+      localStorage.setItem("profile", JSON.stringify(profileDetails));
+      await profileDispatch({ type: "LOGINPROFILE", payload: profileDetails });
+      await dispatch({ type: "LOGIN", payload: userDetails });
 
+      //dp loginProfile
       //context
     }
   };

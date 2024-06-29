@@ -21,15 +21,16 @@ export const useLogin = () => {
     //get profile ID and call profile hook
     const { profileID, token } = json;
     console.log(profileID);
-    if (profileID) {
-      //use login profile hook
-      loginP(profileID, token);
-    }
+
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);
     }
     if (response.ok) {
+      if (profileID) {
+        //use login profile hook
+        loginP(profileID, token);
+      }
       localStorage.setItem("user", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
       //here dispatch profile login essentialy

@@ -5,8 +5,12 @@ export const ProfileContext = createContext();
 export const profileReducer = (state, action) => {
   switch (action.type) {
     case "LOGINPROFILE":
+      console.log("login p ran");
       return { profile: action.payload };
+
     case "LOGOUTPROFILE":
+      console.log("lgp ran");
+      localStorage.removeItem("profile");
       return { profile: null };
     default:
       return state;

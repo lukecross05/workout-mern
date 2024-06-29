@@ -13,6 +13,7 @@ const createUserProfile = async (req, res) => {
   console.log(bio);
   console.log(picFileType);
   console.log(bPublic);
+  const picPath = `${username}.${picFileType}`;
   const token = req.token;
   try {
     const profile = await Profile.createProfile(
@@ -36,7 +37,7 @@ const createUserProfile = async (req, res) => {
         }
       });
 
-      await Profile.setPic(profile, `${username}.${picFileType}`);
+      await Profile.setPic(profile, picPath);
       await profile.save();
     }
 
@@ -47,7 +48,16 @@ const createUserProfile = async (req, res) => {
     const updatedUser = await User.findById(user._id);
     const { email, profileID } = updatedUser;
 
-    res.status(201).json({ email, token, profileID });
+    res
+      .status(201)
+      .json({
+        newEmail: email,
+        newToken: token,
+        newProfileID: profileID,
+        newUsername: username,
+        newBio: bio,
+        newPicPath: picPath,
+      });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

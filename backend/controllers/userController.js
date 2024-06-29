@@ -10,6 +10,7 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.logIn(email, password);
     const { profileID } = user;
+    //check if profileID empty. if it isnt, then find profile &
     const token = createToken(user._id);
     res.status(200).json({ email, token, profileID });
   } catch (error) {
