@@ -197,3 +197,9 @@ header {
   right: 0;
   text-align: right;
 }
+.profileList:hover {
+  color: grey;
+}
+.profileList {
+  color: black;
+}

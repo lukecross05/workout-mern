@@ -5,6 +5,7 @@ const path = require("path");
 const {
   createUserProfile,
   getUserProfile,
+  searchProfiles,
 } = require("../controllers/profileController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -19,5 +20,7 @@ router.use(requireAuth);
 router.get("/profile/:id", getUserProfile);
 
 router.post("/profile", upload.single("picFile"), createUserProfile);
+
+router.get("/search", searchProfiles);
 
 module.exports = router;
