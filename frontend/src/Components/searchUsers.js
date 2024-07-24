@@ -1,7 +1,7 @@
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useState, useEffect } from "react";
 
-const SearchUsers = () => {
+const SearchUsers = ({ changeShowUsers }) => {
   const [currentSearch, setCurrentSearch] = useState("");
   const [profiles, setProfiles] = useState([]);
   const { user } = useAuthContext();
@@ -10,14 +10,24 @@ const SearchUsers = () => {
     return;
   }
   const handleListClick = async (profile) => {
-    if (profile.bPublic == "public") {
-      //display rest of profile
-    }
+    //display rest of profile
+    console.log(profile);
+    changeShowUsers(profile);
+
     //we have user
   };
   const handleInputChange = async (e) => {
     const searchItem = e.target.value;
     await setCurrentSearch(searchItem);
+    if (searchItem.length > 0) {
+      searchDatabaseForUsers(searchItem);
+    } else {
+      setProfiles([]);
+    }
+
+    //go to database and search for all items which start with searchItem. And we put these in a dropdown list.
+  };
+  const searchDatabaseForUsers = async (searchItem) => {
     try {
       const response = await fetch(
         `http://localhost:4000/api/users/search?term=${encodeURIComponent(
@@ -42,18 +52,16 @@ const SearchUsers = () => {
     } catch (error) {
       console.error("Error searching profiles:", error);
     }
-
-    //go to database and search for all items which start with searchItem. And we put these in a dropdown list.
   };
 
   return (
-    <div className="profile-details">
+    <div className="search-profiles">
       <input
         type="text"
         placeholder="search users"
         onChange={handleInputChange}
       />
-      <p>{currentSearch}</p>
+      <div className="button-spacing"></div>
       <ul>
         {profiles.map((profile) => (
           <li

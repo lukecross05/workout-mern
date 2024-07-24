@@ -7,7 +7,7 @@ const ProfileForm = () => {
   const [bio, setBio] = useState("");
   const [error, setError] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
-  const [bPublic, setBPublic] = useState("public");
+  const [bPublic, setBPublic] = useState(false);
   const [pic, setPic] = useState();
   const [picFile, setPicFile] = useState();
   const [picFileType, setPicFileType] = useState();
@@ -79,10 +79,10 @@ const ProfileForm = () => {
   };
   const handleButton = (e) => {
     e.preventDefault();
-    if (bPublic === "public") {
-      setBPublic("private");
+    if (bPublic === true) {
+      setBPublic(false);
     } else {
-      setBPublic("public");
+      setBPublic(true);
     }
   };
   const handlePic = (e) => {
@@ -100,29 +100,33 @@ const ProfileForm = () => {
       action="http://localhost:4000/api/users/profile"
       onSubmit={handleSubmit}
     >
-      <h3>Create your profile</h3>
-      <label className="formText">username</label>
-      <input
-        type="text"
-        onChange={(e) => setUsername(e.target.value)}
-        value={username}
-        //className={emptyFields.includes("username") ? "error" : ""}
-      />
+      <h3>Create Your Profile</h3>
+      <div className="input-container">
+        <input
+          type="text"
+          placeholder="Enter Username"
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
+          //className={emptyFields.includes("username") ? "error" : ""}
+        />
 
-      <label className="formText">Bio</label>
-      <input
-        type="text"
-        onChange={(e) => setBio(e.target.value)}
-        value={bio}
-        //className={emptyFields.includes("bio") ? "error" : ""}
-      />
-      <label>Upload Image</label>
-      <input type="file" accept="image/png, image/jpeg" onChange={handlePic} />
+        <input
+          type="text"
+          placeholder="Enter Bio"
+          onChange={(e) => setBio(e.target.value)}
+          value={bio}
+          //className={emptyFields.includes("bio") ? "error" : ""}
+        />
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={handlePic}
+          placeholder="Upload Profile Picture"
+        />
+      </div>
       <img src={pic} />
-      <label className="formText">Profile Type</label>
-      <button onClick={handleButton}>Toggle Public</button>
-      <label>{bPublic}</label>
-      <p>This means other users will be able to veiw your workouts</p>
+      <button onClick={handleButton}>{bPublic ? "Public" : "Private"}</button>
+      <div className="button-spacing"></div>
       <button className="submitButton"> Submit </button>
       {error && <div className="error">{error}</div>}
     </form>

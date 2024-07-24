@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext.js";
 
-import ProfileForm from "./Components/profileForm";
-import ProfileDetails from "./Components/profileDetails.js";
-import SearchUsers from "./Components/searchUsers.js";
+import Social from "./Pages/Social.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import Home from "./Pages/Home.js";
 import Navbar from "./Components/navbar.js";
 import LogIn from "./Pages/login.js";
 import SignUp from "./Pages/singup.js";
 import Profile from "./Pages/profile.js";
+import Workouts from "./Pages/Workouts.js";
 
 function App() {
   const { user } = useAuthContext();
@@ -33,19 +33,15 @@ function App() {
             />
             <Route
               path="/social"
-              element={!user ? <SignUp /> : <SearchUsers />}
+              element={!user ? <SignUp /> : <Social />} //show social page, which either shows search or profile
             />
             <Route
               path="/users/profile"
-              element={
-                !user ? (
-                  <LogIn />
-                ) : user.profileID ? (
-                  <ProfileDetails />
-                ) : (
-                  <ProfileForm />
-                )
-              }
+              element={!user ? <LogIn /> : <Profile />}
+            />
+            <Route
+              path="/workouts"
+              element={!user ? <LogIn /> : <Workouts />}
             />
           </Routes>
         </div>

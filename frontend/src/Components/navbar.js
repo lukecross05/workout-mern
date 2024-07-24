@@ -10,7 +10,6 @@ const Navbar = () => {
   const { user } = useAuthContext();
   const { profile } = useProfileContext();
   const [path, setPath] = useState("");
-  //const path = "..../backend/public/" + profile.picFile;
   useEffect(() => {
     setPath("");
     console.log(profile);
@@ -33,14 +32,18 @@ const Navbar = () => {
     <header>
       <div className="navbar-container">
         <div className="navbar-left">
-          <Link to="/">
-            <h1>Workout Buddy</h1>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <h1 className="navbar-title">Workout Buddy</h1>
           </Link>
         </div>
         <nav>
           <div className="navbar-right">
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown className="navbar-dropdown">
+              <Dropdown.Toggle
+                as="div"
+                className="dropdown-toggle-image"
+                id="dropdown-basic"
+              >
                 <img
                   src={path}
                   alt="My Image"
@@ -55,14 +58,17 @@ const Navbar = () => {
                       {user.email}
                     </Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item as="button" onClick={handleClick}>
-                      Logout
+                    <Dropdown.Item as={Link} to="/workouts">
+                      Your Workouts
                     </Dropdown.Item>
                     <Dropdown.Item as={Link} to="/users/profile">
                       Your Profile
                     </Dropdown.Item>
                     <Dropdown.Item as={Link} to="/social">
                       Social
+                    </Dropdown.Item>
+                    <Dropdown.Item as="button" onClick={handleClick}>
+                      Logout
                     </Dropdown.Item>
                   </>
                 ) : (

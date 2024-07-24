@@ -6,6 +6,7 @@ const {
   createUserProfile,
   getUserProfile,
   searchProfiles,
+  updateProfile,
 } = require("../controllers/profileController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -22,5 +23,7 @@ router.get("/profile/:id", getUserProfile);
 router.post("/profile", upload.single("picFile"), createUserProfile);
 
 router.get("/search", searchProfiles);
+
+router.patch("/profile/:id", upload.single("picFile"), updateProfile);
 
 module.exports = router;

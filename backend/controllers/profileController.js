@@ -104,7 +104,18 @@ const updateProfile = async (req, res) => {
           //create custom profile method update pic or smt
         }
       });
-      deleteDuplicateWithDifferentExtention(picFileType, username);
+      deleteDuplicateWithDifferentExtension(
+        picFileType,
+        username,
+        (err, message) => {
+          if (err) {
+            console.error("Error:", err);
+          } else {
+            console.log(message);
+            // Proceed with further processing, if necessary
+          }
+        }
+      );
     }
     res.status(201).json({
       newUsername: username,
@@ -116,29 +127,63 @@ const updateProfile = async (req, res) => {
   }
 };
 
-const deleteDuplicateWithDifferentExtention = (picFileType, username) => {
+const deleteDuplicateWithDifferentExtension = (
+  picFileType,
+  username,
+  callback
+) => {
+  const checkForFileAndDelete = (filePath, callbackDone) => {
+    fs.access(filePath, fs.constants.F_OK, (accessErr) => {
+      //fs.constants.F_OK check existance of a file.
+      if (!accessErr) {
+        fs.unlink(filePath, (unlinkErr) => {
+          if (unlinkErr) {
+            callbackDone(unlinkErr);
+          } else {
+            callbackDone(null);
+          }
+        });
+      }
+    });
+  };
+  let filesChecked = 0;
+  const finalCallback = (err) => {
+    if (err) {
+      return callback(err);
+    }
+    filesChecked++;
+    if (filesChecked === 2) {
+      callback(null, "Duplicates deleted.");
+    }
+  };
   let alternativeExtension;
+  let alternativeExtensionTwo;
+
   console.log(picFileType);
   if (picFileType === "jpeg") {
-    alternativeExtension = ".png";
-  } else {
-    alternativeExtension = "jpeg";
+    alternativeExtension = "png";
+    alternativeExtensionTwo = "jpg";
+  } else if (picFileType === "png") {
+    alternativeExtension = "jpg";
+    alternativeExtensionTwo = "jpeg";
+  } else if (picFileType === "jpg") {
+    alternativeExtension = "png";
+    alternativeExtensionTwo = "jpeg";
   }
+
   const alternativeFilePath = path.join(
     __dirname,
     `../public/${username}.${alternativeExtension}`
   );
-  fs.access(alternativeFilePath, fs.constants.F_OK, (accessErr) => {
-    //fs.constants.F_OK check existance of a file.
-    if (!accessErr) {
-      fs.unlink(alternativeFilePath, (unlinkErr) => {
-        if (unlinkErr) {
-          return callback(unlinkErr);
-        }
-      });
-    }
-  });
+  const alternativeFilePathTwo = path.join(
+    __dirname,
+    `../public/${username}.${alternativeExtensionTwo}`
+  );
+  console.log(alternativeFilePath, alternativeFilePathTwo);
+  checkForFileAndDelete(alternativeFilePath, finalCallback);
+  checkForFileAndDelete(alternativeFilePathTwo, finalCallback);
 };
+
 const searchProfiles = async (req, res) => {
   const searchTerm = req.query.term;
   console.log(searchTerm);
