@@ -256,6 +256,7 @@ code {
   padding-bottom: 20px;
 }
 .edit-profile-button {
+  padding-right: 15px;
   background-color: #c5c6c7;
   color: white;
   padding: 0.5rem 1rem;
@@ -276,6 +277,18 @@ code {
 }
 .spacing-login {
   padding-bottom: 20px;
+}
+.noti-button {
+  padding-left: 15px;
+  background-color: #c5c6c7;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.spacing-noti {
+  padding-bottom: 5px;
 }
 .loginButton {
   background-color: #171920; /* submit button Dark green*/
