@@ -119,7 +119,7 @@ const Navbar = () => {
         <nav>
           <div className="navbar-right">
             <div className="inbox">
-              <Dropdown>
+              <Dropdown className="navbar-dropdown">
                 <Dropdown.Toggle>inbox</Dropdown.Toggle>
                 <Dropdown.Menu>
                   {user &&
@@ -132,12 +132,18 @@ const Navbar = () => {
                         <Dropdown.Item key={index}>
                           {request} sent you a friend request
                           <div>
-                            <div>
-                              <button onClick={() => addToFriendsList(request)}>
-                                accept
-                              </button>
-                            </div>
-                            <button onClick={() => deleteFromRequests(request)}>
+                            <div className="spacing-noti"></div>
+                            <button
+                              className="noti-button"
+                              onClick={() => addToFriendsList(request)}
+                            >
+                              accept
+                            </button>
+                            <div className="spacing-noti"></div>
+                            <button
+                              className="noti-button"
+                              onClick={() => deleteFromRequests(request)}
+                            >
                               delete
                             </button>
                           </div>
