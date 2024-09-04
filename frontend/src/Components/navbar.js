@@ -10,8 +10,14 @@ const Navbar = () => {
   const { user } = useAuthContext();
   const { profile } = useProfileContext();
   const [path, setPath] = useState("");
+  const [friendRequests, setFriendRequests] = useState([]);
+
   useEffect(() => {
+    //use effect to  set profile picture and friend requests whenever profile changes.
     setPath("");
+    setFriendRequests([]);
+    console.log(friendRequests);
+    fetchFriends();
     console.log(profile);
     if (profile && profile.picFile) {
       console.log("picfile present");
@@ -22,10 +28,84 @@ const Navbar = () => {
       console.log("picfile not present");
       setPath(`http://localhost:4000/public/def.jpg`);
     }
+
+    //here we need to grab all the friends
   }, [profile]);
 
   const handleClick = () => {
     logout();
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      //timer which checks for new friend requests every ten seconds.
+      fetchFriends();
+    }, 10000);
+
+    return () => clearInterval(intervalId); //clears the interval to prevent any inteferance.
+  });
+
+  const fetchFriends = async () => {
+    if (!user) {
+      return;
+    }
+    if (profile && profile.username) {
+      //requests a users profile from backend, and takes the friend requests and stores them.
+      const response = await fetch(
+        "http://localhost:4000/api/users/profile/friends/" + profile.username,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      const json = await response.json();
+      const { friendRequests } = json;
+      setFriendRequests(friendRequests);
+    }
+  };
+
+  const deleteFromRequests = async (username) => {
+    const usernameOfSender = encodeURIComponent(username);
+    const emailOfRecipient = encodeURIComponent(user.email);
+
+    try {
+      //sends a request to delete a username from a profiles friends list.
+      await fetch(
+        `http://localhost:4000/api/users/profile/deletefriendrequest/?usernameOfSender=${usernameOfSender}&emailOfRecipient=${emailOfRecipient}`,
+
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+    } catch (error) {}
+
+    fetchFriends(); //updates friends list after.
+  };
+
+  const addToFriendsList = async (username) => {
+    await deleteFromRequests(username); //deletes friends request.
+
+    const usernameOfSender = encodeURIComponent(username);
+    const emailOfRecipient = encodeURIComponent(user.email);
+
+    try {
+      //request to add a username to friends list.
+      const response = await fetch(
+        `http://localhost:4000/api/users/profile/acceptfriendrequest?usernameOfSender=${usernameOfSender}&emailOfRecipient=${emailOfRecipient}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+    } catch (error) {}
   };
   //
   return (
@@ -38,6 +118,36 @@ const Navbar = () => {
         </div>
         <nav>
           <div className="navbar-right">
+            <div className="inbox">
+              <Dropdown>
+                <Dropdown.Toggle>inbox</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {user &&
+                    profile &&
+                    (friendRequests && friendRequests.length === 0 ? (
+                      <Dropdown.Item>No new friend requests</Dropdown.Item>
+                    ) : (
+                      friendRequests &&
+                      friendRequests.map((request, index) => (
+                        <Dropdown.Item key={index}>
+                          {request} sent you a friend request
+                          <div>
+                            <div>
+                              <button onClick={() => addToFriendsList(request)}>
+                                accept
+                              </button>
+                            </div>
+                            <button onClick={() => deleteFromRequests(request)}>
+                              delete
+                            </button>
+                          </div>
+                        </Dropdown.Item>
+                      ))
+                    ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+
             <Dropdown className="navbar-dropdown">
               <Dropdown.Toggle
                 as="div"

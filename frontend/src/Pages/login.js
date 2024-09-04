@@ -7,8 +7,7 @@ const LogIn = () => {
   const { login, error, isLoading } = useLogin();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
+    e.preventDefault(); //calls login function from useLogin hook.
     await login(email, password);
   };
 

@@ -31,10 +31,7 @@ function App() {
               path="/signup"
               element={!user ? <SignUp /> : <Navigate to="/" />}
             />
-            <Route
-              path="/social"
-              element={!user ? <SignUp /> : <Social />} //show social page, which either shows search or profile
-            />
+            <Route path="/social" element={!user ? <SignUp /> : <Social />} />
             <Route
               path="/users/profile"
               element={!user ? <LogIn /> : <Profile />}

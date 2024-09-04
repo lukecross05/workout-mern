@@ -10,6 +10,7 @@ const WorkoutsDetails = ({ workout }) => {
       return;
     }
     const response = await fetch(
+      //requset to delete a workout.
       "http://localhost:4000/api/workouts/" + workout._id,
       {
         method: "DELETE",
@@ -21,10 +22,10 @@ const WorkoutsDetails = ({ workout }) => {
     const json = await response.json();
 
     if (response.ok) {
-      dispatch({ type: "DELETE_WORKOUT", payload: json });
+      dispatch({ type: "DELETE_WORKOUT", payload: json }); //dispatch to delete it from context.
     }
   };
-  const date = new Date(workout.createdAt);
+  const date = new Date(workout.createdAt); //creates date and stores in three parts.
   const formattedDate = `${date.getDate()}-${
     date.getMonth() + 1
   }-${date.getFullYear()} : ${date.getHours()}:${date
