@@ -1,7 +1,3 @@
-Certainly! Here’s your content with Markdown styling applied:
-
----
-
 # Workout Tracker & Social Media Application
 
 ## Features
