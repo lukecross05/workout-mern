@@ -3,7 +3,7 @@ Workout Tracker & Social Media Application.
 Features;
 
 -Track your workouts & veiw progress.
-![image](https://github.com/user-attachments/assets/239a4531-034e-42c7-bb74-a3c48c8d79e3)
+![image](https://github.com/user-attachments/assets/59818a93-b4cd-4315-847c-8d8302547988)
 
 -Personalise your profile.
 ![image](https://github.com/user-attachments/assets/fe944f69-5e6a-437b-bae4-23a561a403d0)
