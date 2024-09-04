@@ -30,8 +30,4 @@
   ![Sign Up and Log In 1](https://github.com/user-attachments/assets/8fa4542a-cad6-40d8-8128-de03ce76891d)
   ![Sign Up and Log In 2](https://github.com/user-attachments/assets/406adc0d-d136-45c1-bc1b-aefa7397896f)
 
----
-
-Feel free to adjust any text or images as needed!
-
 
