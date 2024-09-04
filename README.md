@@ -8,6 +8,7 @@ Features;
 -Personalise your profile.
 ![image](https://github.com/user-attachments/assets/fe944f69-5e6a-437b-bae4-23a561a403d0)
 ![image](https://github.com/user-attachments/assets/a43e1cb2-9a9a-4560-be7b-f9ae099c5e69)
+![image](https://github.com/user-attachments/assets/6c1080e6-be69-45cc-b811-77970cb8eda7)
 
 -Edit your profile.
 ![image](https://github.com/user-attachments/assets/c04a7f47-f118-45e5-af3c-aa5ddfc5dd56)
@@ -19,8 +20,9 @@ Features;
 -Recieve friend requests.
 ![image](https://github.com/user-attachments/assets/f1e49282-921b-4881-b83f-c43233d059a7)
 
-
--Securely store your workouts.
+-Securely sign up & log in.
+![image](https://github.com/user-attachments/assets/8fa4542a-cad6-40d8-8128-de03ce76891d)
+![image](https://github.com/user-attachments/assets/406adc0d-d136-45c1-bc1b-aefa7397896f)
 
 
 
