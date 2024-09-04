@@ -3,7 +3,9 @@
   src: url("./Assests/BebasNeue-Regular.ttf") format("truetype");
 }
 /*navbar*/
-
+.inbox {
+  padding-right: 20px;
+}
 .header {
   background-color: #0b0c10;
   /*sets colour to grey*/
@@ -63,6 +65,7 @@
   display: flex;
   align-items: center;
 }
+
 /*navbar end*/
 
 body {
@@ -114,7 +117,7 @@ code {
   background-color: white;
 }
 .spacing {
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
 
 .workout-form {
@@ -192,6 +195,7 @@ code {
 /* Styles for the Home */
 .home {
   padding: 1rem;
+  color: #171920;
 }
 .delete-text {
   text-align: right;

@@ -5,39 +5,33 @@ import { useProfileContext } from "../hooks/useProfileContext";
 const EditProfileForm = ({ changeShowEditProfileForm }) => {
   const [bio, setBio] = useState("");
   const [error, setError] = useState("");
-  const [emptyFields, setEmptyFields] = useState([]);
   const [bPublic, setBPublic] = useState(false);
-  const [pic, setPic] = useState();
   const [picFile, setPicFile] = useState();
   const [picFileType, setPicFileType] = useState();
-  const { user, dispatch } = useAuthContext();
+  const { user } = useAuthContext();
   const { profile, dispatch: profileDispatch } = useProfileContext();
 
   const handleClick = () => {
+    //changes the page to display the profile details again, if a user cancels.
     changeShowEditProfileForm();
   };
 
   const handleSubmit = async (e) => {
+    //handles submission of edit profile form.
     e.preventDefault();
-    if (!user) {
-      setError("you must be logged in");
-      return;
-    }
 
-    const formData = new FormData();
+    const formData = new FormData(); //creates a form data variable.
 
-    formData.append("bio", bio);
+    formData.append("bio", bio); //adds all fields from the form to the formdata.
     formData.append("bPublic", bPublic);
     if (picFile) {
       formData.append("picFile", picFile);
       formData.append("picFileType", picFileType);
     }
     formData.append("email", user.email);
-    /*for (var pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }*/
 
     const response = await fetch(
+      //sends a patch request to update the profile in the backend.
       "http://localhost:4000/api/users/profile/" + profile.username,
       {
         method: "PATCH",
@@ -49,32 +43,35 @@ const EditProfileForm = ({ changeShowEditProfileForm }) => {
     );
 
     const json = await response.json();
-    console.log(json);
-    const { newUsername, newBio, newPicPath } = json;
 
-    const profileDetails = {
-      username: newUsername,
-      bio: newBio,
-      picFile: newPicPath,
-    };
     if (!response.ok) {
       setError(json.error);
-      setEmptyFields(json.emptyFields);
     }
     if (response.ok) {
-      setBio("");
+      const { newUsername, newBio, newPicPath } = json; //gets the updated fields from the response.
+
+      const profileDetails = {
+        //groups all changed fields for dispatch.
+        username: newUsername,
+        bio: newBio,
+        picFile: newPicPath,
+      };
+
+      setBio(""); //reset fields.
       setError(null);
-      setEmptyFields([]);
+
       console.log("profile updated");
       console.log(json);
-      localStorage.setItem("profile", JSON.stringify(profileDetails));
-      await profileDispatch({ type: "LOGINPROFILE", payload: profileDetails });
+
+      localStorage.setItem("profile", JSON.stringify(profileDetails)); //stores updated profile in local storage.
+      await profileDispatch({ type: "LOGINPROFILE", payload: profileDetails }); //dispatch to update profile context.
+
       changeShowEditProfileForm();
-      //dp loginProfile
-      //context
     }
   };
+
   const handleButton = (e) => {
+    //handles toggle public/private button.
     e.preventDefault();
     if (bPublic === true) {
       setBPublic(false);
@@ -84,12 +81,15 @@ const EditProfileForm = ({ changeShowEditProfileForm }) => {
   };
 
   const handlePic = (e) => {
+    //handles picture upload.
     e.preventDefault();
     const file = e.target.files[0];
-    setPic(URL.createObjectURL(file));
     setPicFile(file);
-    const fileTypeParts = file.type.split("/");
-    const fileExtension = fileTypeParts[fileTypeParts.length - 1];
+
+    const fileTypeParts = file.type.split("/"); //splits file into peices.
+
+    const fileExtension = fileTypeParts[fileTypeParts.length - 1]; //takes the file extension from the array.
+
     setPicFileType(fileExtension);
   };
 
@@ -101,14 +101,15 @@ const EditProfileForm = ({ changeShowEditProfileForm }) => {
         onSubmit={handleSubmit}
       >
         <h3>Edit Your Profile</h3>
+
         <div className="input-container">
           <input
             type="text"
             onChange={(e) => setBio(e.target.value)}
             value={bio}
             placeholder="Enter Bio"
-            //className={emptyFields.includes("bio") ? "error" : ""}
           />
+
           <input
             type="file"
             accept="image/png, image/jpeg"
@@ -116,11 +117,17 @@ const EditProfileForm = ({ changeShowEditProfileForm }) => {
             onChange={handlePic}
           />
         </div>
+
         <button onClick={handleButton}>{bPublic ? "Public" : "Private"}</button>
+
         <div className="button-spacing"></div>
+
         <button className="submitButton"> Submit </button>
+
         <div className="button-spacing"></div>
+
         {error && <div className="error">{error}</div>}
+
         <button onClick={handleClick} className="submitButton">
           Cancel
         </button>

@@ -1,34 +1,33 @@
 import { useAuthContext } from "../hooks/useAuthContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const SearchUsers = ({ changeShowUsers }) => {
-  const [currentSearch, setCurrentSearch] = useState("");
   const [profiles, setProfiles] = useState([]);
   const { user } = useAuthContext();
 
   if (!user) {
     return;
   }
-  const handleListClick = async (profile) => {
-    //display rest of profile
-    console.log(profile);
-    changeShowUsers(profile);
 
-    //we have user
+  const handleListClick = async (profile) => {
+    //if a user presses on a profile they search for, pass the profile to the parent component to pass to the veiwprofile component.
+    changeShowUsers(profile);
   };
+
   const handleInputChange = async (e) => {
     const searchItem = e.target.value;
-    await setCurrentSearch(searchItem);
+
     if (searchItem.length > 0) {
+      //checks whether search terms is populated.
       searchDatabaseForUsers(searchItem);
     } else {
       setProfiles([]);
     }
-
-    //go to database and search for all items which start with searchItem. And we put these in a dropdown list.
   };
+
   const searchDatabaseForUsers = async (searchItem) => {
     try {
+      //sends a request to return all profiles which usernames match the search term.
       const response = await fetch(
         `http://localhost:4000/api/users/search?term=${encodeURIComponent(
           searchItem
@@ -41,16 +40,13 @@ const SearchUsers = ({ changeShowUsers }) => {
         }
       );
       if (!response.ok) {
-        throw new Error(
-          `Failed to fetch data: ${response.status} ${response.statusText}`
-        );
+        console.log("error fetching profiles. ");
       }
 
       const currentProfiles = await response.json();
       setProfiles(currentProfiles);
-      console.log(currentProfiles);
     } catch (error) {
-      console.error("Error searching profiles:", error);
+      console.error("error searching profiles. ", error);
     }
   };
 

@@ -5,17 +5,20 @@ const ProfileDetails = ({ changeShowEditProfileForm }) => {
   const { profile } = useProfileContext();
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
+
   useEffect(() => {
-    console.log("Profile updated:", profile);
+    console.log("profile updated. ", profile);
     if (profile) {
+      //when profile changes, update fields.
       setBio(profile.bio);
       setUsername(profile.username);
     }
   }, [profile]);
+
   const handleClick = () => {
+    //change from viewing profiles details to viewing the form to edit them.
     changeShowEditProfileForm();
   };
-  // If profile is not loaded yet, display a loading message
 
   return (
     <div className="profile-details">

@@ -1,25 +1,27 @@
-const fs = require("fs");
 const path = require("path");
 
 const handleFileUpload = (req, res) => {
   const { picFile, picFileType } = req.body;
 
+  //check if files were uploaded.
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send("No files were uploaded.");
   }
 
-  const uploadedFile = picFile; // Assuming the input name is 'file'
+  //get the uploaded file.
+  const uploadedFile = picFile;
+  //define target path.
   const targetPath = path.join(
     __dirname,
     `../public/${username}.${picFileType}`
-  ); // Adjust the path as needed
+  );
 
-  // Save the file to a local directory
-  uploadedFile.mv(targetPath, (err) => {
-    if (err) {
-      return res.status(500).send(err.message);
+  //save the file to directory.
+  uploadedFile.mv(targetPath, (error) => {
+    if (error) {
+      return res.status(500).send(error.message);
     }
-    res.status(200).send("File uploaded successfully!");
+    res.status(200).send("dile uploaded successfully");
   });
 };
 

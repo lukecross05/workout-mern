@@ -17,9 +17,11 @@ const WorkoutForm = () => {
       setError("you must be logged in");
       return;
     }
+
     const workout = { title, reps, load };
 
     const response = await fetch("http://localhost:4000/api/workouts/", {
+      //sends a request to post a new workouts.
       method: "POST",
       body: JSON.stringify(workout),
       headers: {
@@ -27,6 +29,7 @@ const WorkoutForm = () => {
         Authorization: `Bearer ${user.token}`,
       },
     });
+
     const json = await response.json();
 
     if (!response.ok) {
@@ -39,8 +42,7 @@ const WorkoutForm = () => {
       setLoad("");
       setError(null);
       setEmptyFields([]);
-      console.log("new workout added");
-      dispatch({ type: "CREATE_WORKOUT", payload: json });
+      dispatch({ type: "CREATE_WORKOUT", payload: json }); //dispatch to create the workouts in workoutContext.
     }
   };
 
